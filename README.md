@@ -93,14 +93,14 @@
 
 ---
 
-```
-## ⚙️ Instalasi Cepat (Termux)
 
+## ⚙️ Instalasi Cepat (Termux)
+```
 Pastikan kamu sudah menginstal **Termux** (disarankan dari F-Droid) dan **USB OTG** sudah dicolokkan ke HP. 
 
 Buka Termux, lalu **copy-paste seluruh perintah di bawah ini** (otomatis setup USB, install dependencies, clone repo, dan bikin alias):
 
-```bash
+
 echo "====================================================="
 echo "          USB RIG - AUTOMATED INSTALLER              "
 echo "====================================================="
@@ -139,8 +139,8 @@ echo "====================================================="
 echo "✅ INSTALASI SELESAI! Menjalankan USB RIG..."
 echo "====================================================="
 bash run.sh
-```
 
+```
 ⚠️ PENTING: Selain pkg install termux-api, kamu WAJIB menginstal aplikasi Termux:API dari Play Store atau F-Droid. Aplikasi ini adalah jembatan agar USB RIG bisa membaca status baterai, dll.
 
 ---
