@@ -21,6 +21,16 @@
   </a>
 </p>
 
+## 📸 Tampilan Framework
+
+<p align="center">
+  <img src="https://raw.githubusercontent.com/Fly3417/usb-rig/main/assets/menu.png" alt="USB RIG Main Menu" width="100%" style="max-width: 800px; border-radius: 10px;">
+</p>
+
+<p align="center">
+  <i>USB RIG — Interactive CLI Interface</i>
+</p>
+
 ---
 ## 🚀 Fitur Utama
 
