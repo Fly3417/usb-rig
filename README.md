@@ -23,33 +23,39 @@
 
 ## 🚀 Fitur Utama
 
-`USB RIG` membagi proses *Pentesting* portabel menjadi beberapa modul otomatis:
+`USB RIG` membagi proses Pentesting portabel menjadi beberapa modul otomatis:
 
 <details>
 <summary><b>1. Multi-Language Executor</b></summary>
 <br>
 
-- **Auto-Detect Engine:** Jalankan file `.js`, `.py`, `.sh`, atau *compiled binary* (Go/C) langsung dari USB tanpa perlu *setup* interpreter manual.
-- **Cache Execution:** Bypass *noexec* flag pada *filesystem* Android dengan mengeksekusi *binary* via *internal cache* Termux.
+- **Auto-Detect Engine:** Jalankan file `.js`, `.py`, `.sh`, atau *compiled binary* (Go/C) langsung dari USB tanpa perlu setup interpreter manual.
+- **Cache Execution:** Bypass noexec flag pada filesystem Android dengan mengeksekusi binary via internal cache Termux.
 - **Auto-Args:** Masukkan argumen tambahan (seperti IP target atau range port) langsung dari UI sebelum eksekusi.
 </details>
+
+<br>
 
 <details>
 <summary><b>2. Web File Manager (Drag & Drop)</b></summary>
 <br>
 
-- **Upload via Wi-Fi:** Nyalakan *Web Server* di background, lalu akses via browser PC/Laptop.
+- **Upload via Wi-Fi:** Nyalakan Web Server di background, lalu akses via browser PC/Laptop.
 - **Web Editor:** Edit file teks (`.js`, `.py`, `.sh`) langsung dari browser PC tanpa perlu `nano` atau `vim`.
-- **Rename & Delete:** Kelola file dan folder di USB secara *real-time* dari PC.
+- **Rename & Delete:** Kelola file dan folder di USB secara real-time dari PC.
 </details>
+
+<br>
 
 <details>
 <summary><b>3. SDCard Explorer & Importer</b></summary>
 <br>
 
-- **Native File Picker:** Copy file dari *internal storage* (`/sdcard/`) ke dalam USB tanpa butuh *Termux:API*.
+- **Native File Picker:** Copy file dari internal storage (`/sdcard/`) ke dalam USB tanpa butuh Termux:API.
 - **Target Folder Dinamis:** Pilih folder tujuan (termasuk bikin folder baru) langsung dari terminal.
 </details>
+
+<br>
 
 <details>
 <summary><b>4. GitHub Auto-Installer</b></summary>
@@ -59,30 +65,17 @@
 - **Auto-Detect Dependencies:** Otomatis mendeteksi dan menjalankan `npm install`, `pip install`, `go mod tidy`, atau `setup.sh`.
 </details>
 
+<br>
+
 <details>
 <summary><b>5. Port Scanner & Killer</b></summary>
 <br>
 
-- **Port Checker:** Scan port lokal (1-65535) untuk mencari proses yang *hang*.
-- **Process Killer:** Bunuh *Web Server* yang nyangkut tanpa mematikan *Launcher* utama.
+- **Port Checker:** Scan port lokal (1-65535) untuk mencari proses yang hang.
+- **Process Killer:** Bunuh Web Server yang nyangkut tanpa mematikan Launcher utama.
 </details>
 
--
-<p align="left">
-  <a href="mailto:sevenbyte071@gmail.com">
-    <img src="https://img.shields.io/badge/Email-sevenbyte071%40gmail.com-D14836?style=for-the-badge&logo=gmail&logoColor=white" alt="Email" />
-  </a>
-  <a href="https://t.me/Sevenbyte7">
-    <img src="https://img.shields.io/badge/Telegram-@Sevenbyte7-2CA5E0?style=for-the-badge&logo=telegram&logoColor=white" alt="Telegram" />
-  </a>
-  <a href="https://github.com/Fly3417">
-    <img src="https://img.shields.io/badge/GitHub-Fly3417-181717?style=for-the-badge&logo=github&logoColor=white" alt="GitHub" />
-  </a>
-</p>
-```
-
 ---
-
 ## ⚙️ Instalasi Cepat (Termux)
 
 Pastikan kamu sudah menginstal **Termux** (disarankan dari F-Droid) dan **USB OTG** sudah dicolokkan ke HP. 
@@ -184,6 +177,7 @@ Berikut adalah struktur direktori dari **USB RIG** setelah proses instalasi berh
 > - ⚖️ Menggunakan alat ini untuk menyerang target tanpa izin adalah **TINDAKAN PIDANA**.
 > - 🧪 Selalu gunakan target latihan legal seperti `testphp.vulnweb.com`, lab lokal (DVWA), atau VPS milikmu sendiri.
 > - 🛑 Jangan pernah menggunakan alat ini untuk aktivitas ilegal.
+
 ---
 ## 📬 Hubungi Saya
 
