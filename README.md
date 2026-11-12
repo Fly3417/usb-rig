@@ -151,11 +151,8 @@ bash run.sh
 
 
 ## 📂 Struktur Project
-```
-
 Berikut adalah struktur direktori dari **USB RIG** setelah proses instalasi berhasil. 
-
-
+```
 /USB_ROOT/Android/data/com.termux/files/
 │
 ├── CORE SYSTEM
