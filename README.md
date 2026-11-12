@@ -11,7 +11,7 @@
     <img src="https://img.shields.io/badge/Node.js-v18+-339933?style=for-the-badge&logo=node.js&logoColor=white" alt="Node.js" />
   </a>
   <a href="https://github.com/Fly3417/usb-rig/releases" target="_blank">
-    <img src="https://img.shields.io/badge/Version-10.0-cyan?style=for-the-badge" alt="Version" />
+    <img src="https://img.shields.io/badge/Version-13.0-cyan?style=for-the-badge" alt="Version" />
   </a>
   <a href="https://www.android.com/intl/id_id/transfer-files/#how-to-use-usb-otg" target="_blank">
     <img src="https://img.shields.io/badge/Requirement-USB%20OTG-orange?style=for-the-badge&logo=usb&logoColor=white" alt="USB OTG" />
@@ -21,6 +21,7 @@
   </a>
 </p>
 
+---
 ## 📸 Tampilan Framework
 
 <p align="center">
@@ -37,12 +38,12 @@
 `USB RIG` membagi proses Pentesting portabel menjadi beberapa modul otomatis:
 
 <details>
-<summary><b>1. Multi-Language Executor</b></summary>
+<summary><b>1. Multi-Language Executor & Command Runner</b></summary>
 <br>
 
 - **Auto-Detect Engine:** Jalankan file `.js`, `.py`, `.sh`, atau *compiled binary* (Go/C) langsung dari USB tanpa perlu setup interpreter manual.
+- **Smart Command Runner:** Ketik perintah seperti `node tool.js`, sistem akan mencari file tersebut ke seluruh penjuru USB dan menjalankannya secara otomatis.
 - **Cache Execution:** Bypass noexec flag pada filesystem Android dengan mengeksekusi binary via internal cache Termux.
-- **Auto-Args:** Masukkan argumen tambahan (seperti IP target atau range port) langsung dari UI sebelum eksekusi.
 </details>
 
 <br>
@@ -59,34 +60,43 @@
 <br>
 
 <details>
-<summary><b>3. SDCard Explorer & Importer</b></summary>
+<summary><b>3. SDCard Explorer & File Encryption</b></summary>
 <br>
 
 - **Native File Picker:** Copy file dari internal storage (`/sdcard/`) ke dalam USB tanpa butuh Termux:API.
+- **AES-256-GCM Encryption:** Kunci file atau folder penting menjadi brankas `.enc` dengan password. Folder akan di-comprest ke `.tar.gz.enc`.
 - **Target Folder Dinamis:** Pilih folder tujuan (termasuk bikin folder baru) langsung dari terminal.
 </details>
 
 <br>
 
 <details>
-<summary><b>4. GitHub Auto-Installer</b></summary>
+<summary><b>4. Smart GitHub Installer & Git CI/CD</b></summary>
 <br>
 
-- **Clone & Setup:** Clone repo dari GitHub.
-- **Auto-Detect Dependencies:** Otomatis mendeteksi dan menjalankan `npm install`, `pip install`, `go mod tidy`, atau `setup.sh`.
+- **Clone & Setup:** Clone repo dari GitHub dan otomatis jalankan `npm install`, `pip install`, atau `go mod tidy`.
+- **Auto-Read README:** Sistem membaca `README.md` repo untuk menampilkan cara pakai (Usage).
+- **Update System (GET):** Tarik update kode terbaru dari repo GitHub kamu langsung dari UI.
+- **Backup System (POST):** Push perubahan kode lokal ke GitHub langsung dari HP tanpa ngetik perintah Git manual.
 </details>
 
 <br>
 
 <details>
-<summary><b>5. Port Scanner & Killer</b></summary>
+<summary><b>5. System Monitoring</b></summary>
 <br>
 
-- **Port Checker:** Scan port lokal (1-65535) untuk mencari proses yang hang.
-- **Process Killer:** Bunuh Web Server yang nyangkut tanpa mematikan Launcher utama.
+- **Battery Status:** Membaca status baterai, suhu, dan kesehatan via Termux:API.
+- **Multi-language UI:** Mendukung Bahasa Indonesia dan English.
+- **Port Scanner & Killer:** Scan port lokal (1-65535) untuk mencari proses yang hang dan membunuhnya.
 </details>
 
 ---
+Siap King! Ini dia blok Instalasi Cepat yang udah gue tambahin echo garis pemisah (====) biar tampilannya rapi banget pas di-paste ke terminal.
+
+Langsung copy-paste blok di bawah ini ke README.md lu (di bawah blok Fitur Utama):
+
+```
 ## ⚙️ Instalasi Cepat (Termux)
 
 Pastikan kamu sudah menginstal **Termux** (disarankan dari F-Droid) dan **USB OTG** sudah dicolokkan ke HP. 
@@ -94,14 +104,18 @@ Pastikan kamu sudah menginstal **Termux** (disarankan dari F-Droid) dan **USB OT
 Buka Termux, lalu **copy-paste seluruh perintah di bawah ini** (otomatis setup USB, install dependencies, clone repo, dan bikin alias):
 
 ```bash
-# 1. Update & Install Dependencies
-pkg update -y && pkg upgrade -y
-pkg install nodejs python golang git curl -y
+echo "====================================================="
+echo "          USB RIG - AUTOMATED INSTALLER              "
+echo "====================================================="
 
-# 2. Izin Akses Storage (Klik 'Allow' di popup Android)
+echo "[1/6] Mengupdate package & menginstall dependencies..."
+pkg update -y && pkg upgrade -y
+pkg install nodejs python golang git curl termux-api -y
+
+echo "[2/6] Meminta izin akses storage (Klik Allow di popup HP)..."
 termux-setup-storage
 
-# 3. Deteksi USB & Setup Folder
+echo "[3/6] Mendeteksi lokasi USB OTG..."
 USB_PATH=$(find /storage -maxdepth 1 -type d -name "????-????" | head -n 1)
 if [ -z "$USB_PATH" ]; then
     echo "❌ USB tidak terdeteksi! Pastikan USB OTG sudah dicolok."
@@ -109,31 +123,38 @@ if [ -z "$USB_PATH" ]; then
 fi
 echo "✅ USB terdeteksi di: $USB_PATH"
 
-# 4. Masuk ke Folder Private Termux di USB
+echo "[4/6] Masuk ke folder private Termux di USB..."
 TARGET_DIR="$USB_PATH/Android/data/com.termux/files"
 mkdir -p "$TARGET_DIR"
 cd "$TARGET_DIR" || exit 1
 
-# 5. Clone Repo & Install Module
+echo "[5/6] Mengunduh source code dari GitHub & install module..."
 if [ ! -d ".git" ]; then
     git clone https://github.com/Fly3417/usb-rig.git .
 fi
 npm install
 
-# 6. Bikin Alias 'usb'
+echo "[6/6] Membuat alias 'usb' agar mudah dijalankan..."
 echo "alias usb=\"bash $TARGET_DIR/run.sh\"" >> ~/.bashrc
 source ~/.bashrc
 
-# 7. Jalankan Launcher
-echo "🚀 Menjalankan USB RIG..."
+echo "====================================================="
+echo "✅ INSTALASI SELESAI! Menjalankan USB RIG..."
+echo "====================================================="
 bash run.sh
----
 ```
+
+⚠️ PENTING: Selain pkg install termux-api, kamu WAJIB menginstal aplikasi Termux:API dari Play Store atau F-Droid. Aplikasi ini adalah jembatan agar USB RIG bisa membaca status baterai, dll.
+```
+---
+
+```
+
 ## 📂 Struktur Project
 
-Berikut adalah struktur direktori dari **USB RIG** setelah proses instalasi berhasil. Semua file inti berada di *root* folder USB, sedangkan *tools* dan *logs* terpisah di dalam folder masing-masing.
+Berikut adalah struktur direktori dari **USB RIG** setelah proses instalasi berhasil. 
 
-```
+```text
 /USB_ROOT/Android/data/com.termux/files/
 │
 ├── CORE SYSTEM
@@ -141,11 +162,13 @@ Berikut adalah struktur direktori dari **USB RIG** setelah proses instalasi berh
 │   ├── index.js            # Main Router (Otak navigasi menu)
 │   ├── ui.js               # Tampilan Terminal (ASCII Art & Warna)
 │   ├── webserver.js        # Web File Manager (Drag & Drop via Wi-Fi)
+│   ├── crypto-helper.js    # Modul Enkripsi AES-256-GCM
+│   ├── lang.js             # Kamus Bahasa (ID / EN)
 │   └── package.json        # Dependensi Node.js (Chalk)
 │
 ├── CONFIG & UTILS
 │   ├── config.js           # Manajemen WorkDir & History
-│   ├── config.json         # File konfigurasi global (Versi, Author)
+│   ├── config.json         # File konfigurasi global (Versi, Author, Lang)
 │   ├── utils.js            # Helper (Warna, Format Size, Logger)
 │   ├── folder.js           # Logika navigasi folder
 │   └── picker.js           # Logika pemilihan file (Rekursif)
@@ -164,18 +187,18 @@ Berikut adalah struktur direktori dari **USB RIG** setelah proses instalasi berh
     ├── node_modules/       # Library Node.js (Chalk)
     └── .git/               # Folder Git (kalau di-clone)
 ```
+---
 ## 🚧 Status Pengembangan
 
 > [!NOTE]
-> **USB RIG v10.0 (Stable)** 🟢
+> **USB RIG v13.0 (Stable)** 🟢
 > 
-> Framework ini stabil untuk penggunaan harian dan Bug Hunting portabel. Web Server dan File Manager sudah berjalan di background sehingga UI utama tidak akan nge-hang.
+> Framework ini stabil untuk penggunaan harian dan Bug Hunting portabel. Semua fitur roadmap sebelumnya (Enkripsi, Baterai, Git CI/CD, Multi-language) telah selesai diimplementasikan.
 > 
 > **🗺️ Roadmap Selanjutnya:**
-> - [ ] 🔒 Fitur enkripsi folder `tools/` dan `payloads/` (biar aman kalau USB hilang).
-> - [ ] 🔋 Integrasi API `termux-battery-status` (buat mantau baterai HP saat scanning lama).
-> - [ ] 🔄 Auto-update script dari GitHub (tinggal ketik `[U]` di menu Utility).
-> - [ ] 🌐 Multi-language UI (English / Indonesia).
+> - [ ] 🐳 Docker / Proot Support (buat jalanin tool yang butuh environment Linux full).
+> - [ ] 🕷️ Web Vulnerability Scanner (integrasi Nikto/WhatWeb).
+> - [ ] 🔌 Plugin System (bikin sistem modular biar orang lain gampang nambahin fitur).
 > 
 > Jika kamu menemukan bug atau memiliki saran fitur baru, silakan hubungi kontak di bawah. Kami sangat terbuka untuk feedback! 🤝
 
