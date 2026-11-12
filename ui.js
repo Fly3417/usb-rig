@@ -2,9 +2,15 @@ const chalk = require('chalk');
 const os = require('os');
 const fs = require('fs');
 const { execSync } = require('child_process');
+const lang = require('./lang.js');
 
-let config = { version: '10.0' };
+let config = { version: '13.0', lang: 'id' };
 try { config = require('./config.json'); } catch (e) {}
+
+function t(key) {
+    const currentLang = config.lang || 'id';
+    return (lang[currentLang] && lang[currentLang][key]) ? lang[currentLang][key] : key;
+}
 
 function getDeviceInfo() {
     let info = { model: "Android Device", cpu: "ARM64", ram: "Unknown", usbFree: "Unknown", usbTotal: "Unknown" };
@@ -18,9 +24,21 @@ function getDeviceInfo() {
     return info;
 }
 
+function getBatteryStatus() {
+    try {
+        const batRaw = execSync('termux-battery-status 2>/dev/null').toString();
+        const batData = JSON.parse(batRaw);
+        const icon = batData.status === 'CHARGING' ? '⚡' : '';
+        return `${batData.percentage}% ${icon}`;
+    } catch (e) {
+        return "N/A";
+    }
+}
+
 async function showBanner() {
     process.stdout.write('\x1B[3J\x1B[2J\x1B[0f');
-    
+    const battery = getBatteryStatus();
+
     console.log(chalk.cyan.bold(`
     ██╗   ██╗███████╗██████╗     ██████╗ ██╗ ██████╗ 
     ██║   ██║██╔════╝██╔══██╗    ██╔══██╗██║██╔════╝ 
@@ -41,95 +59,98 @@ async function showBanner() {
     console.log(chalk.gray('  │ ') + chalk.white('Device : ') + chalk.yellow(dev.model.padEnd(45)) + chalk.gray('│'));
     console.log(chalk.gray('  │ ') + chalk.white('IP     : ') + chalk.green(ip.padEnd(45)) + chalk.gray('│'));
     console.log(chalk.gray('  │ ') + chalk.white('USB    : ') + chalk.green((dev.usbFree + ' free').padEnd(45)) + chalk.gray('│'));
+    console.log(chalk.gray('  │ ') + chalk.white('Battery: ') + chalk.green(battery.padEnd(45)) + chalk.gray('│'));
     console.log(chalk.gray('  └──────────────────────────────────────────────────────┘'));
     console.log();
 }
 
 function renderMenu(title, items, borderColor = chalk.yellow) {
-    // Lebar total garis (44 karakter)
-    const lineWidth = 44;
-    
-    // --- GARIS ATAS (Dipotong tengah buat judul) ---
+    const lineWidth = 52;
     const titleText = ` ${title} `;
     const leftSide = Math.floor((lineWidth - titleText.length) / 2);
     const rightSide = lineWidth - titleText.length - leftSide;
     
-    // Karakter ujung kiri pake ╔, ujung kanan pake ╗
     console.log(borderColor.bold('  ╔' + '═'.repeat(leftSide)) + 
                 chalk.white.bold(titleText) + 
                 borderColor.bold('═'.repeat(rightSide) + '╗'));
     
-    // --- ISI MENU (TANPA GARIS SAMPING) ---
     items.forEach(item => {
         const numColor = item.key === '0' ? chalk.red.bold : chalk.green.bold;
         const labelColor = item.key === '0' ? chalk.gray : chalk.white;
-        
         const icon = item.icon ? item.icon + ' ' : '  ';
-        
-        // Padding disesuaikan biar rapi ke bawah
-        const labelPadded = item.label.padEnd(18);
-        const descPadded = item.desc.padEnd(20);
-
-        console.log('   ' + 
-            numColor(`[${item.key}] `) + 
-            icon +
-            labelColor(labelPadded) + 
-            chalk.gray(descPadded)
+        console.log(borderColor.bold('  ║ ') + 
+            numColor(`[${item.key}] `) + icon +
+            labelColor(item.label.padEnd(18)) + 
+            chalk.gray(item.desc.padEnd(19)) + 
+            borderColor.bold('║')
         );
     });
     
-    // --- GARIS BAWAH ---
     console.log(borderColor.bold('  ╚' + '═'.repeat(lineWidth) + '╝'));
     console.log();
 }
 
 async function showMainMenu() {
-    renderMenu('MAIN MENU', [
-        { key: '1', label: 'Tools Arsenal', desc: 'Run .js/.py/.sh/bin', icon: '🛠️' },
-        { key: '2', label: 'File Manager', desc: 'Browse USB files', icon: '📁' },
-        { key: '3', label: 'Utility & System', desc: 'Env, Download', icon: '⚙️' },
-        { key: '0', label: 'Keluar', desc: 'Exit system', icon: '🚪' }
+    renderMenu(t('main_menu'), [
+        { key: '1', label: t('menu_tools'), desc: t('menu_tools_desc'), icon: '🛠️' },
+        { key: '2', label: t('menu_file'), desc: t('menu_file_desc'), icon: '📁' },
+        { key: '3', label: t('menu_util'), desc: t('menu_util_desc'), icon: '⚙️' },
+        { key: '0', label: t('menu_exit'), desc: t('menu_exit_desc'), icon: '🚪' }
     ]);
 }
 
 async function showToolsMenu() {
-    renderMenu('TOOLS ARSENAL', [
-        { key: '1', label: 'Show Tools', desc: 'List files in /tools', icon: '📄' },
-        { key: '2', label: 'Command Runner', desc: 'Execute shell', icon: '⌨️' },
-        { key: '0', label: 'Kembali', desc: 'Back to Main', icon: '🔙' }
+    renderMenu(t('tools_arsenal'), [
+        { key: '1', label: t('show_tools'), desc: t('show_tools_desc'), icon: '📄' },
+        { key: '2', label: t('cmd_runner'), desc: t('cmd_runner_desc'), icon: '⌨️' },
+        { key: '0', label: t('back'), desc: t('back_desc'), icon: '🔙' }
     ]);
 }
 
 async function showFileMenu() {
-    renderMenu('FILE MANAGER', [
-        { key: '1', label: 'Folder /tools', desc: 'Manage tools', icon: '📁' },
-        { key: '2', label: 'Folder /payloads', desc: 'Manage payloads', icon: '📂' },
-        { key: '3', label: 'Root USB', desc: 'Manage root', icon: '💾' },
-        { key: '4', label: 'SDCard Explorer', desc: 'Import from phone', icon: '📲' },
-        { key: '5', label: 'Ganti Path', desc: 'Change directory', icon: '🔍' },
-        { key: '0', label: 'Kembali', desc: 'Back to Main', icon: '🔙' }
+    renderMenu(t('file_manager'), [
+        { key: '1', label: t('folder_tools'), desc: t('folder_tools_desc'), icon: '📁' },
+        { key: '2', label: t('folder_payloads'), desc: t('folder_payloads_desc'), icon: '📂' },
+        { key: '3', label: t('root_usb'), desc: t('root_usb_desc'), icon: '💾' },
+        { key: '4', label: t('sdcard_exp'), desc: t('sdcard_exp_desc'), icon: '📲' },
+        { key: '5', label: t('change_path'), desc: t('change_path_desc'), icon: '🔍' },
+        { key: '0', label: t('back'), desc: t('back_desc'), icon: '🔙' }
     ]);
 }
 
 async function showUtilityMenu() {
-    renderMenu('UTILITY & SYSTEM', [
-        { key: '1', label: 'Cek Environment', desc: 'Node/Python/Go', icon: '📊' },
-        { key: '2', label: 'Download GitHub', desc: 'Clone repo', icon: '📦' },
-        { key: '3', label: 'Matikan USB', desc: 'Safe eject', icon: '⏏️' },
-        { key: '4', label: 'Web Server', desc: 'Drag & Drop', icon: '🌐' },
-        { key: '5', label: 'Port Scanner', desc: 'Kill hanging port', icon: '🛡️' },
-        { key: '0', label: 'Kembali', desc: 'Back to Main', icon: '🔙' }
+    renderMenu(t('utility_system'), [
+        { key: '1', label: t('cek_env'), desc: t('cek_env_desc'), icon: '📊' },
+        { key: '2', label: t('dl_github'), desc: t('dl_github_desc'), icon: '📦' },
+        { key: '3', label: t('eject_usb'), desc: t('eject_usb_desc'), icon: '⏏️' },
+        { key: '4', label: t('web_server'), desc: t('web_server_desc'), icon: '🌐' },
+        { key: '5', label: t('port_scan'), desc: t('port_scan_desc'), icon: '🛡️' },
+        { key: '6', label: t('cek_bat'), desc: t('cek_bat_desc'), icon: '🔋' },
+        { key: '7', label: t('update_sys'), desc: t('update_sys_desc'), icon: '🔄' },
+        { key: '8', label: t('backup_sys'), desc: t('backup_sys_desc'), icon: '📤' },
+        { key: '0', label: t('back'), desc: t('back_desc'), icon: '🔙' }
     ]);
 }
 
 async function showFileActionMenu(fileName) {
     renderMenu(`FILE: ${fileName.substring(0, 15)}`, [
-        { key: '1', label: 'Run / Execute', desc: 'Run this file', icon: '▶️' },
-        { key: '2', label: 'View / Edit', desc: 'Edit text', icon: '📝' },
-        { key: '3', label: 'Rename', desc: 'Rename file', icon: '✏️' },
-        { key: '4', label: 'Delete', desc: 'Delete file', icon: '🗑️' },
-        { key: '0', label: 'Kembali', desc: 'Back to list', icon: '🔙' }
+        { key: '1', label: t('action_run'), desc: t('action_run_desc'), icon: '▶️' },
+        { key: '2', label: t('action_view'), desc: t('action_view_desc'), icon: '📝' },
+        { key: '3', label: t('action_rename'), desc: t('action_rename_desc'), icon: '✏️' },
+        { key: '4', label: t('action_delete'), desc: t('action_delete_desc'), icon: '🗑️' },
+        { key: '5', label: t('action_encrypt'), desc: t('action_encrypt_desc'), icon: '🔒' },
+        { key: '0', label: t('back'), desc: t('action_back_list') || 'Back to list', icon: '🔙' }
     ]);
 }
 
-module.exports = { showBanner, showMainMenu, showToolsMenu, showFileMenu, showUtilityMenu, showFileActionMenu };
+async function showFolderActionMenu(folderName) {
+    renderMenu(`FOLDER: ${folderName.substring(0, 15)}`, [
+        { key: '1', label: t('action_open'), desc: t('action_open_desc'), icon: '📂' },
+        { key: '2', label: t('action_rename'), desc: t('action_rename_desc'), icon: '✏️' },
+        { key: '3', label: t('action_delete'), desc: t('action_delete_desc'), icon: '🗑️' },
+        { key: '4', label: t('action_enc_folder'), desc: t('action_enc_folder_desc'), icon: '🔒' },
+        { key: '0', label: t('back'), desc: t('action_back_list') || 'Back to list', icon: '🔙' }
+    ]);
+}
+
+module.exports = { showBanner, showMainMenu, showToolsMenu, showFileMenu, showUtilityMenu, showFileActionMenu, showFolderActionMenu };
