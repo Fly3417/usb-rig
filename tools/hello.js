@@ -1,0 +1,10 @@
+const os = require('os');
+console.log('=================================');
+console.log('   USB RIG — TEST TOOL v1.0');
+console.log('=================================');
+console.log(`Hostname : ${os.hostname()}`);
+console.log(`Platform : ${os.platform()}`);
+console.log(`Arch     : ${os.arch()}`);
+console.log(`Free RAM : ${(os.freemem() / 1024 / 1024 / 1024).toFixed(2)} GB`);
+console.log('=================================');
+console.log('Tool jalan dari USB. Sukses! 🚀');
