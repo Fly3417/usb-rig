@@ -95,12 +95,12 @@
 
 
 ## ⚙️ Instalasi Cepat (Termux)
-```
+
 Pastikan kamu sudah menginstal **Termux** (disarankan dari F-Droid) dan **USB OTG** sudah dicolokkan ke HP. 
 
 Buka Termux, lalu **copy-paste seluruh perintah di bawah ini** (otomatis setup USB, install dependencies, clone repo, dan bikin alias):
 
-
+```
 echo "====================================================="
 echo "          USB RIG - AUTOMATED INSTALLER              "
 echo "====================================================="
