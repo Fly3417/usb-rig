@@ -1,26 +1,27 @@
-# USB RIG 🔫
+# USB RIG👨‍💻
 
 > **Portable Hacking Toolkit Launcher** — Build to Understand, Automate to Scale.  
-> Framework *launcher* multi-bahasa berbasis Node.js yang dirancang khusus untuk berjalan langsung dari **USB Flash Drive** di Android (Termux). Mengubah USB biasa menjadi *Basecamp* portabel untuk *Security Researcher*, *Bug Hunter*, dan *Builder*.
-
-![Version](https://img.shields.io/badge/Version-10.0-cyan?style=for-the-badge)
-![Platform](https://img.shields.io/badge/Platform-Android%20%7C%20Termux-lightgrey?style=for-the-badge)
-![Node.js](https://img.shields.io/badge/Node.js-v18+-green?style=for-the-badge)
-
----
-
-## 📸 Tampilan Framework
+> Framework launcher multi-bahasa berbasis Node.js yang dirancang khusus untuk berjalan langsung dari **USB Flash Drive** di Android (Termux). Mengubah USB biasa menjadi Basecamp portabel untuk Security Researcher, Bug Hunter, dan Builder.
 
 <p align="center">
-  <img src="./assets/menu.png" alt="USB RIG Main Menu" width="100%" style="max-width: 800px; border-radius: 10px;">
-</p>
-
-<p align="center">
-  <i>USB RIG — Interactive CLI Interface</i>
+  <a href="https://f-droid.org/packages/com.termux/" target="_blank">
+    <img src="https://img.shields.io/badge/Platform-Android%20%7C%20Termux-lightgrey?style=for-the-badge&logo=android&logoColor=white" alt="Termux" />
+  </a>
+  <a href="https://nodejs.org/" target="_blank">
+    <img src="https://img.shields.io/badge/Node.js-v18+-339933?style=for-the-badge&logo=node.js&logoColor=white" alt="Node.js" />
+  </a>
+  <a href="https://github.com/Fly3417/usb-rig/releases" target="_blank">
+    <img src="https://img.shields.io/badge/Version-10.0-cyan?style=for-the-badge" alt="Version" />
+  </a>
+  <a href="https://www.android.com/intl/id_id/transfer-files/#how-to-use-usb-otg" target="_blank">
+    <img src="https://img.shields.io/badge/Requirement-USB%20OTG-orange?style=for-the-badge&logo=usb&logoColor=white" alt="USB OTG" />
+  </a>
+  <a href="https://github.com/Fly3417/usb-rig/blob/main/LICENSE" target="_blank">
+    <img src="https://img.shields.io/badge/License-MIT-blue?style=for-the-badge" alt="License" />
+  </a>
 </p>
 
 ---
-
 ## 🚀 Fitur Utama
 
 `USB RIG` membagi proses Pentesting portabel menjadi beberapa modul otomatis:
