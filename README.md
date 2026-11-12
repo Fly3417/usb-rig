@@ -92,9 +92,6 @@
 </details>
 
 ---
-Siap King! Ini dia blok Instalasi Cepat yang udah gue tambahin echo garis pemisah (====) biar tampilannya rapi banget pas di-paste ke terminal.
-
-Langsung copy-paste blok di bawah ini ke README.md lu (di bawah blok Fitur Utama):
 
 ```
 ## ⚙️ Instalasi Cepat (Termux)
