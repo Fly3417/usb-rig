@@ -82,9 +82,10 @@ Pastikan kamu sudah menginstal **Termux** (disarankan dari F-Droid) dan **USB OT
 
 Buka Termux, lalu **copy-paste seluruh perintah di bawah ini** (otomatis setup USB, install dependencies, clone repo, dan bikin alias):
 
-```
+```bash
 # 1. Update & Install Dependencies
-pkg update -y && pkg upgrade -y && pkg install nodejs python golang git curl -y
+pkg update -y && pkg upgrade -y
+pkg install nodejs python golang git curl -y
 
 # 2. Izin Akses Storage (Klik 'Allow' di popup Android)
 termux-setup-storage
@@ -108,15 +109,15 @@ if [ ! -d ".git" ]; then
 fi
 npm install
 
-# 6. Bikin Alias 'usb' biar tinggal ketik 'usb'
+# 6. Bikin Alias 'usb'
 echo "alias usb=\"bash $TARGET_DIR/run.sh\"" >> ~/.bashrc
 source ~/.bashrc
 
 # 7. Jalankan Launcher
 echo "🚀 Menjalankan USB RIG..."
 bash run.sh
-```
 ---
+```
 ## 📂 Struktur Project
 
 Berikut adalah struktur direktori dari **USB RIG** setelah proses instalasi berhasil. Semua file inti berada di *root* folder USB, sedangkan *tools* dan *logs* terpisah di dalam folder masing-masing.
