@@ -147,14 +147,14 @@ bash run.sh
 ⚠️ PENTING: Selain pkg install termux-api, kamu WAJIB menginstal aplikasi Termux:API dari Play Store atau F-Droid. Aplikasi ini adalah jembatan agar USB RIG bisa membaca status baterai, dll.
 
 ---
-```
+
 ```
 
 ## 📂 Struktur Project
 
 Berikut adalah struktur direktori dari **USB RIG** setelah proses instalasi berhasil. 
 
-```text
+
 /USB_ROOT/Android/data/com.termux/files/
 │
 ├── CORE SYSTEM
